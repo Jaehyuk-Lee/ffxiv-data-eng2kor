@@ -95,7 +95,7 @@ namespace ffxiv_data_eng2kor
                     // 맨 위에 필요 없는 줄 한 줄 있으면 건너뜀
                     if (values[0] == "Index") continue;
 
-                    int i = Int32.Parse(values[0]) + 1;
+                    int i = Int32.Parse(values[0]);
                     string id = i.ToString();
                     listId.Add(id);
                     string hexValue = i.ToString("X");
@@ -120,17 +120,68 @@ namespace ffxiv_data_eng2kor
 
                 //쓰기
                 StreamWriter writer = new StreamWriter(saveFile);
-                // for문 인덱스 배열 넘어가지 않도록, 최소 인덱스 값을 대입.
-                int minLength = listIdHex.Count > listLang2.Count ? listLang2.Count : listIdHex.Count;
-                for(int i = 0; i < minLength; i++)
+                for (int i = 0; i < listLang1.Count; i++)
                 {
-                    writer.WriteLine(listId[i] + "," + listIdHex[i] + "," + listLang1[i] + "," + listLang2[i]);
+                    // listLang2의 i번째가 null이면 빈값을 넣어줌. (글섭은 패치가 빨라서 데이터가 더 많음)
+                    if(listLang2.ElementAtOrDefault(i) == null)
+                    {
+                        listLang2.Add("\"\"");
+                    }
+                    if (checkBox_Json.Checked)
+                    {
+                        writer.Write(",{en:" + listLang1[i] + ",ko:" + listLang2[i] + "}");
+                    }
+                    else
+                    {
+                        writer.Write(listId[i] + "," + listIdHex[i] + "," + listLang1[i] + "," + listLang2[i]);
+                    }
+                    if(checkBox_Unicode.Checked)
+                    {
+                        string tmpString = "";
+                        /*writer.Write(",");
+                        for(int j=1; j < listLang2[i].Length - 1; j++)
+                            tmpString += listLang2[i][j];
+                        byte[] convertByte = Encoding.Unicode.GetBytes(tmpString, 4,);
+                        writer.Write("\\u");
+                        for (int j=convertByte.Length; j < 4; j++)
+                        {
+                            writer.Write("0");
+                        }
+                        for(int j=0; j<convertByte.Length; j++)
+                            writer.Write(convertByte[j]);*/
+                        for (int j = 1; j < listLang2[i].Length - 1; j++)
+                            tmpString += listLang2[i][j];
+                        var unicode = EncodeNonAsciiCharacters(tmpString);
+                        writer.WriteLine();
+                        writer.Write("'ko': '" + unicode + "',");
+                        writer.WriteLine();
+                    }
+                    writer.WriteLine();
                 }
                 writer.Close();
                 label_Status.Text = "변환 완료";
                 label_SaveFile.Text = "저장할 파일 이름";
                 saveFile = "";
             }
+        }
+
+        static string EncodeNonAsciiCharacters(string value)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in value)
+            {
+                if (c > 127)
+                {
+                    // This character is too big for ASCII
+                    string encodedValue = "\\u" + ((int)c).ToString("x4");
+                    sb.Append(encodedValue);
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
         }
     }
 }

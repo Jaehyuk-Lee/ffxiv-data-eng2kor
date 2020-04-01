@@ -40,6 +40,8 @@ namespace ffxiv_data_eng2kor
             this.label_OpenFile2 = new System.Windows.Forms.Label();
             this.button_OpenFile2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkBox_Unicode = new System.Windows.Forms.CheckBox();
+            this.checkBox_Json = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button_OpenFile1
@@ -148,17 +150,39 @@ namespace ffxiv_data_eng2kor
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("맑은 고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.Location = new System.Drawing.Point(307, 166);
+            this.label1.Location = new System.Drawing.Point(371, 164);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(90, 17);
             this.label1.TabIndex = 24;
             this.label1.Text = "v20191230.1";
             // 
+            // checkBox_Unicode
+            // 
+            this.checkBox_Unicode.AutoSize = true;
+            this.checkBox_Unicode.Location = new System.Drawing.Point(198, 77);
+            this.checkBox_Unicode.Name = "checkBox_Unicode";
+            this.checkBox_Unicode.Size = new System.Drawing.Size(193, 25);
+            this.checkBox_Unicode.TabIndex = 25;
+            this.checkBox_Unicode.Text = "cactbot 유니코드 변환";
+            this.checkBox_Unicode.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_Json
+            // 
+            this.checkBox_Json.AutoSize = true;
+            this.checkBox_Json.Location = new System.Drawing.Point(256, 108);
+            this.checkBox_Json.Name = "checkBox_Json";
+            this.checkBox_Json.Size = new System.Drawing.Size(135, 25);
+            this.checkBox_Json.TabIndex = 26;
+            this.checkBox_Json.Text = "json 형식 변환";
+            this.checkBox_Json.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(402, 190);
+            this.ClientSize = new System.Drawing.Size(473, 190);
+            this.Controls.Add(this.checkBox_Json);
+            this.Controls.Add(this.checkBox_Unicode);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label_OpenFile2);
             this.Controls.Add(this.button_OpenFile2);
@@ -194,6 +218,8 @@ namespace ffxiv_data_eng2kor
         private System.Windows.Forms.Label label_OpenFile2;
         private System.Windows.Forms.Button button_OpenFile2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox checkBox_Unicode;
+        private System.Windows.Forms.CheckBox checkBox_Json;
     }
 }
 
